@@ -21,7 +21,7 @@ try:
     else:  # pragma: nocover
         pass_context = typing.cast(typing.Any, jinja2).contextfunction
 except ModuleNotFoundError:  # pragma: nocover
-    jinja2 = None  # type: ignore[assignment]
+    jinja2 = None
 
 
 if typing.TYPE_CHECKING:
@@ -138,7 +138,10 @@ class Jinja2Templates:
         return jinja2.Environment(**env_options)
 
     def _setup_env_defaults(self, env: jinja2.Environment) -> None:
-        _pass_context: typing.Callable[[typing.Callable[..., typing.Any]], typing.Callable[..., typing.Any]] = typing.cast(typing.Any, pass_context)
+        _pass_context: typing.Callable[
+            [typing.Callable[..., typing.Any]],
+            typing.Callable[..., typing.Any],
+        ] = typing.cast(typing.Any, pass_context)
 
         @_pass_context
         def url_for(
