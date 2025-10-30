@@ -10,8 +10,10 @@ from starlette.requests import Request
 from starlette.responses import HTMLResponse
 from starlette.types import Receive, Scope, Send
 
+jinja2: typing.Any
 try:
-    import jinja2
+    import jinja2 as _jinja2
+    jinja2 = _jinja2
 
     # @contextfunction was renamed to @pass_context in Jinja 3.0, and was removed in 3.1
     # hence we try to get pass_context (most installs will be >=3.1)
