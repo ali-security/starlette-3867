@@ -25,6 +25,13 @@ except ModuleNotFoundError:  # pragma: nocover
     jinja2 = None  # type: ignore[assignment]
 
 
+LoaderSearchPath = typing.Union[
+    str,
+    PathLike[str],
+    typing.Sequence[typing.Union[str, PathLike[str]]],
+]
+
+
 class _TemplateResponse(HTMLResponse):
     def __init__(
         self,
@@ -120,12 +127,7 @@ class Jinja2Templates:
         | typing.Sequence[str | PathLike[typing.AnyStr]],
         **env_options: typing.Any,
     ) -> jinja2.Environment:
-        loader = jinja2.FileSystemLoader(
-            typing.cast(
-                str | PathLike[str] | typing.Sequence[str | PathLike[str]],
-                directory,
-            )
-        )
+        loader = jinja2.FileSystemLoader(typing.cast(LoaderSearchPath, directory))
         env_options.setdefault("loader", loader)
         env_options.setdefault("autoescape", True)
 
