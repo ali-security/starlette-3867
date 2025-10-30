@@ -25,11 +25,16 @@ except ModuleNotFoundError:  # pragma: nocover
     jinja2 = None  # type: ignore[assignment]
 
 
-LoaderSearchPath = typing.Union[
-    str,
-    typing.PathLike[str],
-    typing.Sequence[typing.Union[str, typing.PathLike[str]]],
-]
+if typing.TYPE_CHECKING:
+    from os import PathLike as _PathLike
+
+    LoaderSearchPath = typing.Union[
+        str,
+        _PathLike[str],
+        typing.Sequence[typing.Union[str, _PathLike[str]]],
+    ]
+else:
+    LoaderSearchPath = typing.Any
 
 
 class _TemplateResponse(HTMLResponse):
