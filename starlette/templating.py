@@ -120,7 +120,12 @@ class Jinja2Templates:
         | typing.Sequence[str | PathLike[typing.AnyStr]],
         **env_options: typing.Any,
     ) -> jinja2.Environment:
-        loader = jinja2.FileSystemLoader(directory)
+        loader = jinja2.FileSystemLoader(
+            typing.cast(
+                str | PathLike[str] | typing.Sequence[str | PathLike[str]],
+                directory,
+            )
+        )
         env_options.setdefault("loader", loader)
         env_options.setdefault("autoescape", True)
 
