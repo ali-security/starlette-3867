@@ -16,11 +16,10 @@ try:
     # @contextfunction was renamed to @pass_context in Jinja 3.0, and was removed in 3.1
     # hence we try to get pass_context (most installs will be >=3.1)
     # and fall back to contextfunction,
-    # adding a type ignore for mypy to let us access an attribute that may not exist
     if hasattr(jinja2, "pass_context"):
         pass_context = jinja2.pass_context
     else:  # pragma: nocover
-        pass_context = jinja2.contextfunction  # type: ignore[attr-defined]
+        pass_context = typing.cast(typing.Any, jinja2).contextfunction
 except ModuleNotFoundError:  # pragma: nocover
     jinja2 = None  # type: ignore[assignment]
 
@@ -139,7 +138,9 @@ class Jinja2Templates:
         return jinja2.Environment(**env_options)
 
     def _setup_env_defaults(self, env: jinja2.Environment) -> None:
-        @pass_context
+        _pass_context: typing.Callable[[typing.Callable[..., typing.Any]], typing.Callable[..., typing.Any]] = typing.cast(typing.Any, pass_context)
+
+        @_pass_context
         def url_for(
             context: dict[str, typing.Any],
             name: str,
