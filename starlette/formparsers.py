@@ -8,6 +8,9 @@ from urllib.parse import unquote_plus
 
 from starlette.datastructures import FormData, Headers, UploadFile
 
+multipart: typing.Any
+parse_options_header: typing.Any
+
 try:
     import python_multipart as multipart
     from python_multipart.multipart import parse_options_header
@@ -87,7 +90,7 @@ class FormParser:
         }
 
         # Create the parser.
-        parser = multipart.QuerystringParser(callbacks)
+        parser = multipart.QuerystringParser(typing.cast(typing.Any, callbacks))
         field_name = b""
         field_value = b""
 
@@ -255,7 +258,7 @@ class MultiPartParser:
         }
 
         # Create the parser.
-        parser = multipart.MultipartParser(boundary, callbacks)
+        parser = multipart.MultipartParser(boundary, typing.cast(typing.Any, callbacks))
         try:
             # Feed the parser with data from the request.
             async for chunk in self.stream:
