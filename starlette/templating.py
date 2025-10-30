@@ -27,8 +27,8 @@ except ModuleNotFoundError:  # pragma: nocover
 
 LoaderSearchPath = typing.Union[
     str,
-    PathLike[str],
-    typing.Sequence[typing.Union[str, PathLike[str]]],
+    typing.PathLike[str],
+    typing.Sequence[typing.Union[str, typing.PathLike[str]]],
 ]
 
 
