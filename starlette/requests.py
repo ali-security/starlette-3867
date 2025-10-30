@@ -12,8 +12,9 @@ from starlette.exceptions import HTTPException
 from starlette.formparsers import FormParser, MultiPartException, MultiPartParser
 from starlette.types import Message, Receive, Scope, Send
 
+parse_options_header: typing.Any
 try:
-    from multipart.multipart import parse_options_header
+    from python_multipart.multipart import parse_options_header
 except ModuleNotFoundError:  # pragma: nocover
     parse_options_header = None
 
